@@ -198,6 +198,34 @@
             color: #6e7681;
             margin-top: 6px;
         }
+        .skill-card .card-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .card-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            color: #58a6ff;
+            text-decoration: none;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(88, 166, 255, 0.08);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            transition: all 0.2s;
+        }
+        .card-links a:hover {
+            background: rgba(88, 166, 255, 0.18);
+            border-color: #58a6ff;
+        }
+        .card-links .no-link {
+            font-size: 0.75rem;
+            color: #6e7681;
+            font-style: italic;
+        }
         .skill-card .popularity {
             display: flex;
             align-items: center;
@@ -830,10 +858,13 @@
                     <span class="popularity-label">Popularity</span>
                     <span class="popularity-bar">${dots(s.popularity)}</span>
                 </div>
+                <div class="card-links">
+                    ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#128279; Source</a>` : '<span class="no-link">proposed skill</span>'}
+                    <span style="font-size:0.72rem;color:#6e7681">${sourceLabels[s.source] || s.source}</span>
+                </div>
                 <div class="card-detail">
                     <div class="usecase"><strong>Use Case:</strong> ${s.usecase}</div>
                     <div class="usecase"><strong>Detail:</strong> ${s.detail}</div>
-                    <div class="source">Source: ${sourceLabels[s.source] || s.source}${s.url ? ` &mdash; <a href="${s.url}" target="_blank" rel="noopener" style="color:#58a6ff" onclick="event.stopPropagation()">View on GitHub &rarr;</a>` : ' (proposed skill)'}</div>
                 </div>
             </div>
         `).join("");
