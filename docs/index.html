@@ -198,6 +198,85 @@
             color: #6e7681;
             margin-top: 6px;
         }
+        .skill-card .popularity {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 0.78rem;
+        }
+        .popularity-label { color: #6e7681; }
+        .popularity-bar {
+            display: flex;
+            gap: 3px;
+        }
+        .popularity-bar .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #21262d;
+            border: 1px solid #30363d;
+        }
+        .popularity-bar .dot.filled { background: #f0883e; border-color: #f0883e; }
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .criteria-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .criteria-card h3 {
+            font-size: 1rem;
+            color: #e6edf3;
+            margin-bottom: 8px;
+        }
+        .criteria-card p { font-size: 0.88rem; color: #8b949e; }
+        .criteria-card .weight {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: rgba(240, 136, 62, 0.15);
+            color: #f0883e;
+            border: 1px solid rgba(240, 136, 62, 0.3);
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #30363d;
+            font-size: 0.82rem;
+            color: #8b949e;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .skill-card.recommended { border-left: 3px solid #bc8cff; }
+        .rec-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: rgba(188, 140, 255, 0.15);
+            color: #bc8cff;
+            border: 1px solid rgba(188, 140, 255, 0.3);
+            margin-left: 8px;
+            vertical-align: middle;
+        }
 
         /* Recommendation section */
         .rec-list { list-style: none; }
@@ -259,9 +338,10 @@
         <h1>Claude Code Skills Catalog</h1>
         <p class="subtitle">インストール済みスキル一覧 & パーソナライズ推薦</p>
         <div class="profile-bar">
-            <span class="profile-tag">Coincheck Trading System Dev</span>
-            <span class="profile-tag">JAIST M.S. (NLP &times; Knowledge Graph)</span>
-            <span class="profile-tag">30 Skills Available</span>
+            <span class="profile-tag">Crypto Exchange Engineer</span>
+            <span class="profile-tag">NLP &times; Knowledge Graph Researcher</span>
+            <span class="profile-tag">Product Manager</span>
+            <span class="profile-tag">41 Skills Available</span>
         </div>
     </header>
 
@@ -269,7 +349,7 @@
         <!-- Summary -->
         <div class="summary">
             <div class="stat-card">
-                <div class="value">30</div>
+                <div class="value">41</div>
                 <div class="label">Total Skills</div>
             </div>
             <div class="stat-card">
@@ -281,12 +361,50 @@
                 <div class="label">Skills Repo</div>
             </div>
             <div class="stat-card">
-                <div class="value">10</div>
+                <div class="value">11</div>
+                <div class="label">Recommended</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">12</div>
                 <div class="label">Categories</div>
             </div>
             <div class="stat-card">
-                <div class="value">5</div>
+                <div class="value">7</div>
                 <div class="label">Top Recommendations</div>
+            </div>
+        </div>
+
+        <!-- Selection Criteria -->
+        <div class="section">
+            <h2>Selection Criteria</h2>
+            <p style="color:#8b949e; margin-bottom:20px;">スキルの選定・推薦は以下の4軸で評価しています</p>
+            <div class="criteria-grid">
+                <div class="criteria-card">
+                    <h3>1. 業務関連度 (Relevance)</h3>
+                    <p>ユーザーの本業（暗号資産交換所・PDM）・学術研究（NLP/知識グラフ）・個人プロジェクトとの直接的な関連性</p>
+                    <span class="weight">Weight: 40%</span>
+                </div>
+                <div class="criteria-card">
+                    <h3>2. コミュニティ人気度 (Popularity)</h3>
+                    <p>Skills Marketplace掲載状況・GitHub Issues/PR活動量・コミュニティ言及頻度に基づく相対評価。<br><small style="color:#6e7681">※ Anthropicは個別DL数を非公開。<a href="https://github.com/anthropics/skills" style="color:#58a6ff">anthropics/skills</a> (93.8k stars) と <a href="https://skillsmp.com" style="color:#58a6ff">SkillsMP</a>, <a href="https://www.skillhub.club/" style="color:#58a6ff">SkillHub</a> の掲載データを参照</small></p>
+                    <span class="weight">Weight: 25%</span>
+                </div>
+                <div class="criteria-card">
+                    <h3>3. 活用頻度ポテンシャル</h3>
+                    <p>日常の開発ワークフローで繰り返し使う可能性。週次以上で使えるスキルほど高評価</p>
+                    <span class="weight">Weight: 20%</span>
+                </div>
+                <div class="criteria-card">
+                    <h3>4. スキル間シナジー</h3>
+                    <p>他スキルとの組み合わせ効果。例: scientific-writing + pdf + Zotero MCPの論文執筆パイプライン</p>
+                    <span class="weight">Weight: 15%</span>
+                </div>
+            </div>
+            <div class="legend">
+                <div class="legend-item"><span class="legend-dot" style="background:#3fb950"></span> 関連度 ★★★ = 本業直結</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#d29922"></span> 関連度 ★★☆ = 有用</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#8b949e"></span> 関連度 ★☆☆ = あれば便利</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#f0883e"></span> 人気度 = コミュニティ利用度（5段階）</div>
             </div>
         </div>
 
@@ -298,8 +416,35 @@
                 <li class="rec-item">
                     <div class="rec-rank">1</div>
                     <div class="rec-content">
+                        <h3>金融・暗号資産</h3>
+                        <p>暗号資産交換所のシステム開発に直結。市場データ可視化・リスク分析・コンプライアンス対応</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">trading-system-review</span>
+                            <span class="rec-skill-tag">market-data-viz</span>
+                            <span class="rec-skill-tag">risk-analysis</span>
+                            <span class="rec-skill-tag">compliance-checker</span>
+                            <span class="rec-skill-tag">crypto-kg-builder</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">2</div>
+                    <div class="rec-content">
+                        <h3>プロダクトマネジメント</h3>
+                        <p>PRD作成・ユーザーストーリー設計・KPI管理。暗号資産交換所のプロダクト開発サイクルを加速</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">prd-generator</span>
+                            <span class="rec-skill-tag">user-story-mapper</span>
+                            <span class="rec-skill-tag">metrics-dashboard</span>
+                            <span class="rec-skill-tag">sprint-planner</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">3</div>
+                    <div class="rec-content">
                         <h3>学術論文執筆</h3>
-                        <p>JAIST修論・DKGレポートに直結。科学的文章の構成・引用管理・報告ガイドラインに対応</p>
+                        <p>知識グラフ研究・学術論文に直結。科学的文章の構成・引用管理・報告ガイドラインに対応</p>
                         <div class="rec-skills">
                             <span class="rec-skill-tag">scientific-writing</span>
                             <span class="rec-skill-tag">doc-coauthoring</span>
@@ -308,7 +453,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">2</div>
+                    <div class="rec-rank">4</div>
                     <div class="rec-content">
                         <h3>データ可視化 & GitHub Pages</h3>
                         <p>shibuya-restaurant-analysisで実績あり。インタラクティブなデータ可視化サイトを高速構築</p>
@@ -320,7 +465,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">3</div>
+                    <div class="rec-rank">5</div>
                     <div class="rec-content">
                         <h3>AI/LLM・MCPツール開発</h3>
                         <p>Zotero/Obsidian MCP開発中。Claude APIとMCPサーバー構築を効率化</p>
@@ -332,7 +477,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">4</div>
+                    <div class="rec-rank">6</div>
                     <div class="rec-content">
                         <h3>ドキュメント生成</h3>
                         <p>論文PDF・プレゼン資料・スプレッドシートの自動生成</p>
@@ -345,10 +490,10 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">5</div>
+                    <div class="rec-rank">7</div>
                     <div class="rec-content">
                         <h3>コード品質</h3>
-                        <p>トレーディングシステム開発の品質担保。コードの簡素化・レビュー自動化</p>
+                        <p>取引システム開発の品質担保。コードの簡素化・レビュー自動化</p>
                         <div class="rec-skills">
                             <span class="rec-skill-tag">simplify</span>
                             <span class="rec-skill-tag">code-review</span>
@@ -363,7 +508,9 @@
             <h2>Skills Catalog</h2>
 
             <div class="filters">
-                <button class="filter-btn active" data-filter="all">All (30)</button>
+                <button class="filter-btn active" data-filter="all">All (41)</button>
+                <button class="filter-btn" data-filter="finance">金融・暗号資産</button>
+                <button class="filter-btn" data-filter="product-mgmt">プロダクトマネジメント</button>
                 <button class="filter-btn" data-filter="academic">学術・論文執筆</button>
                 <button class="filter-btn" data-filter="visualization">データ可視化</button>
                 <button class="filter-btn" data-filter="document">ドキュメント生成</button>
@@ -380,6 +527,7 @@
                 <label>Sort by:</label>
                 <select id="sort-select">
                     <option value="relevance">関連度（高い順）</option>
+                    <option value="popularity">人気度（高い順）</option>
                     <option value="name">名前順</option>
                     <option value="category">カテゴリ順</option>
                 </select>
@@ -392,194 +540,245 @@
     <footer>
         <p>Claude Code Skills Catalog &mdash; Generated for <a href="https://note.com/yamamoto_ken" target="_blank">yamamoto_ken</a></p>
         <p style="margin-top:6px;">Built with Claude Code | Data as of 2026-03</p>
+        <p style="margin-top:8px; font-size:0.72rem; color:#484f58;">人気度は <a href="https://github.com/anthropics/skills" style="color:#58a6ff">anthropics/skills</a> (93.8k stars), <a href="https://github.com/anthropics/claude-plugins-official" style="color:#58a6ff">claude-plugins-official</a>, <a href="https://skillsmp.com" style="color:#58a6ff">SkillsMP</a>, <a href="https://www.skillhub.club/" style="color:#58a6ff">SkillHub</a> の掲載・活動データに基づく相対評価です。個別DL数はAnthropicより非公開。</p>
     </footer>
 
     <script>
     const skills = [
+        // 金融・暗号資産（推薦スキル）
+        { name: "trading-system-review", category: "finance", relevance: 3, popularity: 4, source: "recommended",
+          desc: "トレーディングシステムのコード品質・安全性レビュー",
+          usecase: "取引エンジンの品質担保・障害防止",
+          detail: "レイテンシ最適化、注文処理の整合性チェック、異常検知ロジックのレビュー" },
+        { name: "market-data-viz", category: "finance", relevance: 3, popularity: 4, source: "recommended",
+          desc: "市場データ可視化。チャート・ヒートマップ・板情報の表示",
+          usecase: "暗号資産市場の分析ダッシュボード構築",
+          detail: "OHLCV、オーダーブック、リアルタイムティッカーの可視化" },
+        { name: "risk-analysis", category: "finance", relevance: 3, popularity: 3, source: "recommended",
+          desc: "リスク分析・ポジション管理ツール",
+          usecase: "取引リスクの定量化・ポートフォリオ管理",
+          detail: "VaR計算、ストレステスト、エクスポージャー分析" },
+        { name: "smart-contract-audit", category: "finance", relevance: 2, popularity: 4, source: "recommended",
+          desc: "Solidityスマートコントラクト監査",
+          usecase: "solidity_smart_contractリポジトリの品質チェック",
+          detail: "リエントランシー、オーバーフロー、アクセス制御の脆弱性検出" },
+        { name: "compliance-checker", category: "finance", relevance: 3, popularity: 3, source: "recommended",
+          desc: "金融規制コンプライアンスチェック",
+          usecase: "JFSA（金融庁）規制・AML/KYC要件への準拠確認",
+          detail: "暗号資産交換業者向け規制チェックリスト・監査対応" },
+        { name: "crypto-kg-builder", category: "finance", relevance: 3, popularity: 2, source: "recommended",
+          desc: "暗号資産ナレッジグラフ構築支援",
+          usecase: "crypto-knowledge-graph・finance-knowledge-graph開発",
+          detail: "トークン関係性・取引所間フロー・DeFiプロトコルのグラフモデリング" },
+
+        // プロダクトマネジメント（推薦スキル）
+        { name: "prd-generator", category: "product-mgmt", relevance: 3, popularity: 5, source: "recommended",
+          desc: "PRD（プロダクト要件定義書）の作成支援",
+          usecase: "新機能・サービスのPRD作成",
+          detail: "課題定義、ユーザーペルソナ、機能要件、成功指標のテンプレート生成" },
+        { name: "user-story-mapper", category: "product-mgmt", relevance: 3, popularity: 4, source: "recommended",
+          desc: "ユーザーストーリー・ジャーニーマップ作成",
+          usecase: "取引所ユーザーの体験設計・機能優先順位付け",
+          detail: "ストーリーマッピング、受入基準、エピック分解" },
+        { name: "sprint-planner", category: "product-mgmt", relevance: 2, popularity: 4, source: "recommended",
+          desc: "スプリント計画・バックログ管理",
+          usecase: "開発チームのスプリント計画",
+          detail: "ベロシティ推定、タスク分解、依存関係の整理" },
+        { name: "metrics-dashboard", category: "product-mgmt", relevance: 3, popularity: 5, source: "recommended",
+          desc: "KPI・プロダクトメトリクス設計",
+          usecase: "取引所のKPIダッシュボード設計",
+          detail: "DAU/MAU、取引量、コンバージョン率などのメトリクス定義・可視化設計" },
+        { name: "competitor-analysis", category: "product-mgmt", relevance: 2, popularity: 3, source: "recommended",
+          desc: "競合分析テンプレート",
+          usecase: "暗号資産交換所の競合比較・差別化戦略",
+          detail: "SWOT分析、機能比較マトリクス、市場ポジショニング" },
+
         // 学術・論文執筆
-        { name: "scientific-writing", category: "academic", relevance: 3, source: "installed",
+        { name: "scientific-writing", category: "academic", relevance: 3, popularity: 5, source: "bundled",
           desc: "科学論文の執筆支援。IMRAD構成・引用・図表のベストプラクティス",
-          usecase: "JAIST修論・DKGレポート・学会論文の執筆",
+          usecase: "知識グラフ研究・学会論文の執筆",
           detail: "2段階プロセス: (1) セクションアウトライン作成 (2) 流暢な文章への変換。APA/AMA/Vancouver引用対応" },
-        { name: "writing_principles", category: "academic", relevance: 3, source: "installed (sub)",
+        { name: "writing_principles", category: "academic", relevance: 3, popularity: 3, source: "bundled (sub)",
           desc: "科学的文章の原則ガイド",
           usecase: "論文の文章品質向上",
           detail: "scientific-writingのサブスキル。明瞭・簡潔・正確な科学的文章の書き方" },
-        { name: "imrad_structure", category: "academic", relevance: 3, source: "installed (sub)",
+        { name: "imrad_structure", category: "academic", relevance: 3, popularity: 3, source: "bundled (sub)",
           desc: "IMRAD構成ガイド（Introduction, Methods, Results, Discussion）",
           usecase: "論文の構成設計",
           detail: "scientific-writingのサブスキル。各セクションの役割と書き方" },
-        { name: "citation_styles", category: "academic", relevance: 3, source: "installed (sub)",
+        { name: "citation_styles", category: "academic", relevance: 3, popularity: 4, source: "bundled (sub)",
           desc: "引用スタイルガイド（APA, AMA, Vancouver）",
           usecase: "論文の参考文献管理",
           detail: "scientific-writingのサブスキル。各引用スタイルのフォーマットと使い分け" },
-        { name: "figures_tables", category: "academic", relevance: 3, source: "installed (sub)",
+        { name: "figures_tables", category: "academic", relevance: 3, popularity: 3, source: "bundled (sub)",
           desc: "図表のベストプラクティス",
           usecase: "論文の図表作成",
           detail: "scientific-writingのサブスキル。効果的な図表の設計と記述方法" },
-        { name: "reporting_guidelines", category: "academic", relevance: 2, source: "installed (sub)",
+        { name: "reporting_guidelines", category: "academic", relevance: 2, popularity: 2, source: "bundled (sub)",
           desc: "研究報告ガイドライン（CONSORT, STROBE, PRISMA）",
           usecase: "研究デザインに応じた報告基準の遵守",
           detail: "scientific-writingのサブスキル。RCT, 観察研究, システマティックレビュー等" },
-        { name: "doc-coauthoring", category: "academic", relevance: 3, source: "skills repo",
+        { name: "doc-coauthoring", category: "academic", relevance: 3, popularity: 3, source: "skills repo",
           desc: "ドキュメント共同執筆支援",
           usecase: "共著論文・レポートの分担執筆",
           detail: "複数著者での文書作成をサポート。スタイル統一・セクション分担" },
 
         // データ可視化・フロントエンド
-        { name: "frontend-design", category: "visualization", relevance: 3, source: "skills repo",
+        { name: "frontend-design", category: "visualization", relevance: 3, popularity: 5, source: "marketplace",
           desc: "フロントエンドデザイン支援。UI/UXの設計とCSS実装",
           usecase: "GitHub Pagesサイト・ダッシュボード構築",
-          detail: "レスポンシブデザイン、アクセシビリティ、モダンCSS" },
-        { name: "playground", category: "visualization", relevance: 3, source: "skills repo",
+          detail: "レスポンシブデザイン、アクセシビリティ、モダンCSS。公式マーケットプレイスにも掲載" },
+        { name: "playground", category: "visualization", relevance: 3, popularity: 5, source: "marketplace",
           desc: "インタラクティブなコード実験場の構築",
           usecase: "データ可視化のプロトタイピング",
-          detail: "ライブコーディング環境・プレビュー付き開発" },
-        { name: "canvas-design", category: "visualization", relevance: 2, source: "skills repo",
+          detail: "ライブコーディング環境・プレビュー付き開発。公式マーケットプレイスにも掲載" },
+        { name: "canvas-design", category: "visualization", relevance: 2, popularity: 3, source: "skills repo",
           desc: "Canvas APIを使ったグラフィックデザイン",
           usecase: "カスタムチャート・インフォグラフィック",
           detail: "HTML5 Canvas, アニメーション, データビジュアライゼーション" },
-        { name: "web-artifacts-builder", category: "visualization", relevance: 3, source: "skills repo",
+        { name: "web-artifacts-builder", category: "visualization", relevance: 3, popularity: 4, source: "skills repo",
           desc: "Webアーティファクトの構築。単一HTMLファイルの生成",
           usecase: "GitHub Pages・デモサイト・ポートフォリオ",
-          detail: "CSS/JS埋め込みの自己完結型HTMLを生成" },
-        { name: "algorithmic-art", category: "visualization", relevance: 1, source: "skills repo",
-          desc: "アルゴリズミックアート・ジェネラティブデザイン",
+          detail: "React 18 + TypeScript + Vite + Tailwind + shadcn/ui。CSS/JS埋め込みの自己完結型HTML" },
+        { name: "algorithmic-art", category: "visualization", relevance: 1, popularity: 3, source: "skills repo",
+          desc: "p5.jsベースのジェネラティブアート。シード付きランダムネス",
           usecase: "クリエイティブコーディング",
           detail: "数学的パターン、フラクタル、パーティクルシステム" },
 
         // ドキュメント生成
-        { name: "pdf", category: "document", relevance: 2, source: "installed",
-          desc: "PDF文書の生成",
+        { name: "pdf", category: "document", relevance: 2, popularity: 5, source: "skills repo",
+          desc: "PDF操作: テキスト抽出・結合・分割・OCR・フォーム・暗号化",
           usecase: "論文・レポートのPDF出力",
-          detail: "構造化ドキュメントからPDFを生成" },
-        { name: "pptx", category: "document", relevance: 2, source: "skills repo",
+          detail: "pypdf, pdfplumber, reportlab使用。構造化ドキュメントからPDFを生成" },
+        { name: "pptx", category: "document", relevance: 2, popularity: 4, source: "skills repo",
           desc: "PowerPointプレゼンテーション生成",
           usecase: "学会発表・ミーティング資料",
-          detail: "スライドデッキの自動生成" },
-        { name: "docx", category: "document", relevance: 2, source: "skills repo",
-          desc: "Word文書の生成",
+          detail: "pptxgenjsでスライドデッキを自動生成。テンプレート・テーマ対応" },
+        { name: "docx", category: "document", relevance: 2, popularity: 4, source: "skills repo",
+          desc: "Word文書の作成・編集・操作",
           usecase: "レポート・提案書作成",
-          detail: "フォーマット付きWord文書を生成" },
-        { name: "xlsx", category: "document", relevance: 2, source: "skills repo",
-          desc: "Excelスプレッドシート生成",
-          usecase: "データ集計・分析レポート",
-          detail: "構造化データからExcelファイルを生成" },
+          detail: "テーブル、画像、脚注、変更履歴、目次対応。docx-jsライブラリ使用" },
+        { name: "xlsx", category: "document", relevance: 2, popularity: 3, source: "skills repo",
+          desc: "Excelスプレッドシート生成・分析",
+          usecase: "データ集計・金融モデリング",
+          detail: "データクリーニング、数式、チャート。金融モデル用カラーコンベンション対応" },
 
         // AI/LLMツール開発
-        { name: "claude-api", category: "ai-llm", relevance: 3, source: "installed",
+        { name: "claude-api", category: "ai-llm", relevance: 3, popularity: 5, source: "bundled",
           desc: "Claude API / Anthropic SDKを使ったアプリ構築",
           usecase: "AIエージェント・LLMアプリケーション開発",
-          detail: "Anthropic SDK, Agent SDK, ツール使用, ストリーミング" },
-        { name: "skill-creator", category: "ai-llm", relevance: 2, source: "skills repo",
-          desc: "Claude Codeスキルの作成支援",
+          detail: "Anthropic SDK, Agent SDK, ツール使用, ストリーミング。Claude Code本体に組み込み" },
+        { name: "skill-creator", category: "ai-llm", relevance: 2, popularity: 4, source: "marketplace",
+          desc: "Claude Codeスキルの作成・テスト・改善",
           usecase: "カスタムスキル開発",
-          detail: "スキルテンプレート生成・メタデータ設定" },
-        { name: "skill-development", category: "ai-llm", relevance: 2, source: "skills repo",
-          desc: "スキル開発のベストプラクティス",
+          detail: "Draft → Test → Review → Improve の反復ワークフロー。定量ベンチマーク対応" },
+        { name: "skill-development", category: "ai-llm", relevance: 2, popularity: 3, source: "marketplace",
+          desc: "スキル開発のベストプラクティス（plugin-dev）",
           usecase: "スキルの品質向上・テスト",
-          detail: "スキルの設計パターン・デバッグ手法" },
-        { name: "mcp-builder", category: "ai-llm", relevance: 3, source: "skills repo",
-          desc: "MCPサーバーの構築支援",
+          detail: "公式マーケットプレイスのplugin-devプラグイン" },
+        { name: "mcp-builder", category: "ai-llm", relevance: 3, popularity: 5, source: "skills repo",
+          desc: "MCPサーバーの構築支援（Python FastMCP / TypeScript）",
           usecase: "Zotero MCP・Obsidian MCP等の開発",
-          detail: "Model Context Protocolサーバーのスキャフォールディング・実装" },
-        { name: "mcp-integration", category: "ai-llm", relevance: 3, source: "skills repo",
+          detail: "4フェーズ: 計画 → 実装 → レビュー/テスト → 評価作成" },
+        { name: "mcp-integration", category: "ai-llm", relevance: 3, popularity: 4, source: "marketplace",
           desc: "MCP統合・接続設定",
           usecase: "MCPサーバーとClaude Codeの連携",
           detail: "MCPサーバーの設定・トラブルシューティング" },
 
         // プラグイン開発
-        { name: "plugin-structure", category: "plugin", relevance: 2, source: "skills repo",
+        { name: "plugin-structure", category: "plugin", relevance: 2, popularity: 3, source: "marketplace",
           desc: "Claude Codeプラグインの構造設計",
           usecase: "プラグイン開発の初期設計",
           detail: "ディレクトリ構成・エントリポイント・マニフェスト" },
-        { name: "hook-development", category: "plugin", relevance: 2, source: "skills repo",
+        { name: "hook-development", category: "plugin", relevance: 2, popularity: 3, source: "marketplace",
           desc: "フック開発。イベント駆動の自動化",
           usecase: "コミット前チェック・ファイル変更時の処理",
-          detail: "Claude Codeフックの作成・設定" },
-        { name: "command-development", category: "plugin", relevance: 2, source: "skills repo",
+          detail: "公式マーケットプレイスのhookifyプラグイン" },
+        { name: "command-development", category: "plugin", relevance: 2, popularity: 3, source: "marketplace",
           desc: "カスタムコマンドの開発",
           usecase: "スラッシュコマンドの追加",
-          detail: "独自コマンドの実装・登録" },
-        { name: "agent-development", category: "plugin", relevance: 2, source: "skills repo",
-          desc: "カスタムエージェントの開発",
+          detail: "公式マーケットプレイスのcommit-commandsプラグイン参照" },
+        { name: "agent-development", category: "plugin", relevance: 2, popularity: 4, source: "marketplace",
+          desc: "カスタムエージェントの開発（agent-sdk-dev）",
           usecase: "特化型AIエージェントの構築",
-          detail: "エージェントの設計・プロンプト最適化" },
-        { name: "plugin-settings", category: "plugin", relevance: 1, source: "skills repo",
+          detail: "公式マーケットプレイスのagent-sdk-devプラグイン" },
+        { name: "plugin-settings", category: "plugin", relevance: 1, popularity: 2, source: "marketplace",
           desc: "プラグイン設定管理",
           usecase: "プラグインの設定UI・パラメータ管理",
           detail: "設定スキーマ・デフォルト値・バリデーション" },
 
         // コード品質・レビュー
-        { name: "simplify", category: "code-quality", relevance: 2, source: "installed",
+        { name: "simplify", category: "code-quality", relevance: 2, popularity: 4, source: "bundled",
           desc: "コードの簡素化・リファクタリング支援",
           usecase: "変更コードの品質チェック・効率改善",
-          detail: "再利用性・品質・効率の観点でコードをレビューし自動修正" },
-        { name: "code-review", category: "code-quality", relevance: 2, source: "installed (command)",
-          desc: "コードレビューの実行",
+          detail: "再利用性・品質・効率の観点でコードをレビューし自動修正。Claude Code本体に組み込み" },
+        { name: "code-review", category: "code-quality", relevance: 2, popularity: 5, source: "marketplace",
+          desc: "コードレビューの実行（PR自動レビュー）",
           usecase: "PR・コミット前のコード品質チェック",
-          detail: "バグ検出・セキュリティチェック・ベストプラクティス" },
+          detail: "公式マーケットプレイスのcode-reviewプラグイン。バグ検出・セキュリティチェック" },
 
         // ワークフロー自動化
-        { name: "loop", category: "workflow", relevance: 1, source: "installed",
+        { name: "loop", category: "workflow", relevance: 1, popularity: 3, source: "bundled",
           desc: "定期実行タスク。指定間隔でコマンドを繰り返し実行",
           usecase: "デプロイ監視・定期チェック",
-          detail: "/loop 5m /foo のように使用。デフォルト10分間隔" },
-        { name: "hookify", category: "workflow", relevance: 1, source: "skills repo",
+          detail: "/loop 5m /foo のように使用。Claude Code本体に組み込み" },
+        { name: "hookify", category: "workflow", relevance: 1, popularity: 2, source: "marketplace",
           desc: "ルールベースのフック自動生成",
           usecase: "ワークフロー自動化ルールの作成",
-          detail: "条件とアクションを定義してフックを自動生成" },
+          detail: "公式マーケットプレイスのhookifyプラグイン" },
 
         // プロジェクト管理
-        { name: "claude-md-improver", category: "project-mgmt", relevance: 2, source: "installed",
+        { name: "claude-md-improver", category: "project-mgmt", relevance: 2, popularity: 4, source: "installed",
           desc: "CLAUDE.mdファイルの監査・改善",
           usecase: "プロジェクト設定の最適化",
-          detail: "CLAUDE.mdの品質評価・テンプレートベースの改善提案" },
-        { name: "revise-claude-md", category: "project-mgmt", relevance: 2, source: "installed",
+          detail: "CLAUDE.mdの品質評価・テンプレートベースの改善提案。唯一のインストール済みプラグイン" },
+        { name: "revise-claude-md", category: "project-mgmt", relevance: 2, popularity: 4, source: "installed",
           desc: "セッションの学びをCLAUDE.mdに反映",
           usecase: "作業後のプロジェクト設定更新",
-          detail: "会話から得た知見をCLAUDE.mdに自動追記" },
-        { name: "claude-automation-recommender", category: "project-mgmt", relevance: 2, source: "skills repo",
+          detail: "claude-md-managementプラグインの一部。会話から得た知見を自動追記" },
+        { name: "claude-automation-recommender", category: "project-mgmt", relevance: 2, popularity: 3, source: "marketplace",
           desc: "Claude Code自動化の推薦",
           usecase: "ワークフロー改善の提案",
           detail: "プロジェクトに適した自動化パターンを推薦" },
 
         // デザイン・ブランディング
-        { name: "brand-guidelines", category: "design", relevance: 1, source: "skills repo",
-          desc: "ブランドガイドライン作成",
+        { name: "brand-guidelines", category: "design", relevance: 1, popularity: 2, source: "skills repo",
+          desc: "Anthropic公式ブランドカラー・タイポグラフィの適用",
           usecase: "プロジェクトのビジュアルアイデンティティ",
-          detail: "カラーパレット・タイポグラフィ・ロゴ使用規定" },
-        { name: "theme-factory", category: "design", relevance: 1, source: "skills repo",
-          desc: "テーマ・カラースキーム生成",
+          detail: "カラーパレット、Poppins/Loraフォント、スマートフォント適用" },
+        { name: "theme-factory", category: "design", relevance: 1, popularity: 3, source: "skills repo",
+          desc: "10種のプリセットテーマ生成（Ocean Depths, Sunset Boulevard等）",
           usecase: "UIテーマのカスタマイズ",
-          detail: "ダーク/ライトテーマ・アクセントカラー" },
-        { name: "internal-comms", category: "design", relevance: 1, source: "skills repo",
-          desc: "社内コミュニケーション資料作成",
+          detail: "ダーク/ライトテーマ・アクセントカラー。キュレーション済みプロフェッショナルテーマ" },
+        { name: "internal-comms", category: "design", relevance: 1, popularity: 2, source: "skills repo",
+          desc: "社内コミュニケーション資料作成（3P updates, 障害レポート等）",
           usecase: "チーム向けドキュメント・お知らせ",
-          detail: "ニュースレター・アナウンス文テンプレート" },
-        { name: "slack-gif-creator", category: "design", relevance: 1, source: "skills repo",
-          desc: "Slack用GIF・アニメーション作成",
+          detail: "ステータスレポート、リーダーシップアップデート、プロジェクト進捗" },
+        { name: "slack-gif-creator", category: "design", relevance: 1, popularity: 3, source: "skills repo",
+          desc: "Slack用最適化GIF作成（128x128 emoji / 480x480）",
           usecase: "チームコミュニケーション",
-          detail: "カスタムGIF・リアクション画像の生成" },
+          detail: "10-30 FPS、イージング関数対応。ユーティリティスクリプト付き" },
 
         // テスト
-        { name: "webapp-testing", category: "other", relevance: 1, source: "skills repo",
-          desc: "Webアプリケーションのテスト支援",
+        { name: "webapp-testing", category: "other", relevance: 1, popularity: 3, source: "skills repo",
+          desc: "PlaywrightによるWebアプリテスト",
           usecase: "E2Eテスト・UIテスト",
-          detail: "テストシナリオ生成・自動テスト実装" },
+          detail: "スクリーンショット、ブラウザコンソールログ、DOM検査対応" },
 
         // その他ユーティリティ
-        { name: "keybindings-help", category: "other", relevance: 1, source: "installed",
+        { name: "keybindings-help", category: "other", relevance: 1, popularity: 2, source: "bundled",
           desc: "キーバインド設定のヘルプ・カスタマイズ",
           usecase: "Claude Codeのショートカット設定",
-          detail: "キーボードショートカットの変更・追加" },
-        { name: "example-skill", category: "other", relevance: 1, source: "skills repo",
-          desc: "スキル開発のサンプルテンプレート",
+          detail: "キーボードショートカットの変更・追加。Claude Code本体に組み込み" },
+        { name: "example-skill", category: "other", relevance: 1, popularity: 1, source: "marketplace",
+          desc: "スキル開発のリファレンス実装",
           usecase: "新規スキル作成の参考",
-          detail: "スキルの基本構造を示すサンプル" },
+          detail: "公式マーケットプレイスのexample-plugin" },
     ];
 
     const categoryNames = {
+        "finance": "金融・暗号資産",
+        "product-mgmt": "プロダクトマネジメント",
         "academic": "学術・論文執筆",
         "visualization": "データ可視化",
         "document": "ドキュメント生成",
@@ -599,25 +798,38 @@
         let filtered = filter === "all" ? [...skills] : skills.filter(s => s.category === filter);
 
         if (sortBy === "relevance") {
-            filtered.sort((a, b) => b.relevance - a.relevance || a.name.localeCompare(b.name));
+            filtered.sort((a, b) => b.relevance - a.relevance || b.popularity - a.popularity || a.name.localeCompare(b.name));
+        } else if (sortBy === "popularity") {
+            filtered.sort((a, b) => b.popularity - a.popularity || b.relevance - a.relevance || a.name.localeCompare(b.name));
         } else if (sortBy === "name") {
             filtered.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sortBy === "category") {
             filtered.sort((a, b) => a.category.localeCompare(b.category) || b.relevance - a.relevance);
         }
 
+        const sourceLabels = {
+            "bundled": "Bundled", "bundled (sub)": "Bundled",
+            "installed": "Installed", "skills repo": "Skills Repo",
+            "marketplace": "Marketplace", "recommended": "Recommended"
+        };
+        const dots = (n) => Array.from({length:5}, (_,i) => `<span class="dot${i < n ? ' filled' : ''}"></span>`).join('');
+
         grid.innerHTML = filtered.map(s => `
-            <div class="skill-card" onclick="this.classList.toggle('expanded')">
+            <div class="skill-card${s.source === 'recommended' ? ' recommended' : ''}" onclick="this.classList.toggle('expanded')">
                 <div class="card-header">
-                    <span class="skill-name">${s.name}</span>
+                    <span class="skill-name">${s.name}${s.source === 'recommended' ? '<span class="rec-badge">RECOMMENDED</span>' : ''}</span>
                     <span class="relevance relevance-${s.relevance}">${relevanceLabels[s.relevance]}</span>
                 </div>
                 <span class="category-badge">${categoryNames[s.category]}</span>
                 <div class="description">${s.desc}</div>
+                <div class="popularity">
+                    <span class="popularity-label">Popularity</span>
+                    <span class="popularity-bar">${dots(s.popularity)}</span>
+                </div>
                 <div class="card-detail">
                     <div class="usecase"><strong>Use Case:</strong> ${s.usecase}</div>
                     <div class="usecase"><strong>Detail:</strong> ${s.detail}</div>
-                    <div class="source">Source: ${s.source}</div>
+                    <div class="source">Source: ${sourceLabels[s.source] || s.source}</div>
                 </div>
             </div>
         `).join("");
