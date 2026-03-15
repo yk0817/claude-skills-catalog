@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Skills カタログ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1e2e 100%);
+            color: white;
+            padding: 48px 20px 36px;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header .subtitle { font-size: 1rem; opacity: 0.7; margin-bottom: 16px; }
+        .profile-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .profile-tag {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #58a6ff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+
+        /* Summary stats */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+        .stat-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-card .label { font-size: 0.8rem; color: #8b949e; margin-top: 4px; }
+
+        /* Section */
+        .section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+        .section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #58a6ff;
+            color: #e6edf3;
+        }
+
+        /* Filter buttons */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .filter-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+        .filter-btn.active {
+            background: rgba(88, 166, 255, 0.15);
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+
+        /* Sort controls */
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .sort-controls label { font-size: 0.85rem; color: #8b949e; }
+        .sort-controls select {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        /* Skill cards */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .skill-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.25s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.1);
+        }
+        .skill-card.expanded .card-detail { display: block; }
+        .skill-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .skill-card .skill-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #e6edf3;
+        }
+        .skill-card .relevance {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        .relevance-3 { background: rgba(63, 185, 80, 0.15); color: #3fb950; border: 1px solid rgba(63, 185, 80, 0.3); }
+        .relevance-2 { background: rgba(210, 153, 34, 0.15); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
+        .relevance-1 { background: rgba(139, 148, 158, 0.15); color: #8b949e; border: 1px solid rgba(139, 148, 158, 0.3); }
+        .skill-card .category-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background: rgba(188, 140, 255, 0.1);
+            color: #bc8cff;
+            border: 1px solid rgba(188, 140, 255, 0.2);
+        }
+        .skill-card .description {
+            font-size: 0.88rem;
+            color: #8b949e;
+            line-height: 1.5;
+        }
+        .card-detail {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #30363d;
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+        .card-detail .usecase { margin-bottom: 6px; }
+        .card-detail .usecase strong { color: #c9d1d9; }
+        .card-detail .source {
+            font-size: 0.75rem;
+            color: #6e7681;
+            margin-top: 6px;
+        }
+
+        /* Recommendation section */
+        .rec-list { list-style: none; }
+        .rec-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .rec-rank {
+            font-size: 1.8rem;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .rec-content h3 { color: #e6edf3; font-size: 1.1rem; margin-bottom: 6px; }
+        .rec-content p { font-size: 0.9rem; color: #8b949e; margin-bottom: 8px; }
+        .rec-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .rec-skill-tag {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            color: #58a6ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #6e7681;
+            font-size: 0.8rem;
+            border-top: 1px solid #21262d;
+        }
+        footer a { color: #58a6ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .rec-item { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Claude Code Skills Catalog</h1>
+        <p class="subtitle">インストール済みスキル一覧 & パーソナライズ推薦</p>
+        <div class="profile-bar">
+            <span class="profile-tag">Coincheck Trading System Dev</span>
+            <span class="profile-tag">JAIST M.S. (NLP &times; Knowledge Graph)</span>
+            <span class="profile-tag">30 Skills Available</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Summary -->
+        <div class="summary">
+            <div class="stat-card">
+                <div class="value">30</div>
+                <div class="label">Total Skills</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">14</div>
+                <div class="label">Installed</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">16</div>
+                <div class="label">Skills Repo</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">10</div>
+                <div class="label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">5</div>
+                <div class="label">Top Recommendations</div>
+            </div>
+        </div>
+
+        <!-- Personalized Recommendations -->
+        <div class="section">
+            <h2>Personalized Recommendations</h2>
+            <p style="color:#8b949e; margin-bottom:20px;">あなたのリポジトリ・活動に基づくスキルジャンル推薦</p>
+            <ul class="rec-list">
+                <li class="rec-item">
+                    <div class="rec-rank">1</div>
+                    <div class="rec-content">
+                        <h3>学術論文執筆</h3>
+                        <p>JAIST修論・DKGレポートに直結。科学的文章の構成・引用管理・報告ガイドラインに対応</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">scientific-writing</span>
+                            <span class="rec-skill-tag">doc-coauthoring</span>
+                            <span class="rec-skill-tag">pdf</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">2</div>
+                    <div class="rec-content">
+                        <h3>データ可視化 & GitHub Pages</h3>
+                        <p>shibuya-restaurant-analysisで実績あり。インタラクティブなデータ可視化サイトを高速構築</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">playground</span>
+                            <span class="rec-skill-tag">web-artifacts-builder</span>
+                            <span class="rec-skill-tag">frontend-design</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">3</div>
+                    <div class="rec-content">
+                        <h3>AI/LLM・MCPツール開発</h3>
+                        <p>Zotero/Obsidian MCP開発中。Claude APIとMCPサーバー構築を効率化</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">mcp-builder</span>
+                            <span class="rec-skill-tag">claude-api</span>
+                            <span class="rec-skill-tag">mcp-integration</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">4</div>
+                    <div class="rec-content">
+                        <h3>ドキュメント生成</h3>
+                        <p>論文PDF・プレゼン資料・スプレッドシートの自動生成</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">pdf</span>
+                            <span class="rec-skill-tag">pptx</span>
+                            <span class="rec-skill-tag">docx</span>
+                            <span class="rec-skill-tag">xlsx</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="rec-item">
+                    <div class="rec-rank">5</div>
+                    <div class="rec-content">
+                        <h3>コード品質</h3>
+                        <p>トレーディングシステム開発の品質担保。コードの簡素化・レビュー自動化</p>
+                        <div class="rec-skills">
+                            <span class="rec-skill-tag">simplify</span>
+                            <span class="rec-skill-tag">code-review</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Skills Catalog -->
+        <div class="section">
+            <h2>Skills Catalog</h2>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All (30)</button>
+                <button class="filter-btn" data-filter="academic">学術・論文執筆</button>
+                <button class="filter-btn" data-filter="visualization">データ可視化</button>
+                <button class="filter-btn" data-filter="document">ドキュメント生成</button>
+                <button class="filter-btn" data-filter="ai-llm">AI/LLMツール</button>
+                <button class="filter-btn" data-filter="plugin">プラグイン開発</button>
+                <button class="filter-btn" data-filter="code-quality">コード品質</button>
+                <button class="filter-btn" data-filter="workflow">ワークフロー</button>
+                <button class="filter-btn" data-filter="project-mgmt">プロジェクト管理</button>
+                <button class="filter-btn" data-filter="design">デザイン</button>
+                <button class="filter-btn" data-filter="other">その他</button>
+            </div>
+
+            <div class="sort-controls">
+                <label>Sort by:</label>
+                <select id="sort-select">
+                    <option value="relevance">関連度（高い順）</option>
+                    <option value="name">名前順</option>
+                    <option value="category">カテゴリ順</option>
+                </select>
+            </div>
+
+            <div class="skills-grid" id="skills-grid"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Claude Code Skills Catalog &mdash; Generated for <a href="https://note.com/yamamoto_ken" target="_blank">yamamoto_ken</a></p>
+        <p style="margin-top:6px;">Built with Claude Code | Data as of 2026-03</p>
+    </footer>
+
+    <script>
+    const skills = [
+        // 学術・論文執筆
+        { name: "scientific-writing", category: "academic", relevance: 3, source: "installed",
+          desc: "科学論文の執筆支援。IMRAD構成・引用・図表のベストプラクティス",
+          usecase: "JAIST修論・DKGレポート・学会論文の執筆",
+          detail: "2段階プロセス: (1) セクションアウトライン作成 (2) 流暢な文章への変換。APA/AMA/Vancouver引用対応" },
+        { name: "writing_principles", category: "academic", relevance: 3, source: "installed (sub)",
+          desc: "科学的文章の原則ガイド",
+          usecase: "論文の文章品質向上",
+          detail: "scientific-writingのサブスキル。明瞭・簡潔・正確な科学的文章の書き方" },
+        { name: "imrad_structure", category: "academic", relevance: 3, source: "installed (sub)",
+          desc: "IMRAD構成ガイド（Introduction, Methods, Results, Discussion）",
+          usecase: "論文の構成設計",
+          detail: "scientific-writingのサブスキル。各セクションの役割と書き方" },
+        { name: "citation_styles", category: "academic", relevance: 3, source: "installed (sub)",
+          desc: "引用スタイルガイド（APA, AMA, Vancouver）",
+          usecase: "論文の参考文献管理",
+          detail: "scientific-writingのサブスキル。各引用スタイルのフォーマットと使い分け" },
+        { name: "figures_tables", category: "academic", relevance: 3, source: "installed (sub)",
+          desc: "図表のベストプラクティス",
+          usecase: "論文の図表作成",
+          detail: "scientific-writingのサブスキル。効果的な図表の設計と記述方法" },
+        { name: "reporting_guidelines", category: "academic", relevance: 2, source: "installed (sub)",
+          desc: "研究報告ガイドライン（CONSORT, STROBE, PRISMA）",
+          usecase: "研究デザインに応じた報告基準の遵守",
+          detail: "scientific-writingのサブスキル。RCT, 観察研究, システマティックレビュー等" },
+        { name: "doc-coauthoring", category: "academic", relevance: 3, source: "skills repo",
+          desc: "ドキュメント共同執筆支援",
+          usecase: "共著論文・レポートの分担執筆",
+          detail: "複数著者での文書作成をサポート。スタイル統一・セクション分担" },
+
+        // データ可視化・フロントエンド
+        { name: "frontend-design", category: "visualization", relevance: 3, source: "skills repo",
+          desc: "フロントエンドデザイン支援。UI/UXの設計とCSS実装",
+          usecase: "GitHub Pagesサイト・ダッシュボード構築",
+          detail: "レスポンシブデザイン、アクセシビリティ、モダンCSS" },
+        { name: "playground", category: "visualization", relevance: 3, source: "skills repo",
+          desc: "インタラクティブなコード実験場の構築",
+          usecase: "データ可視化のプロトタイピング",
+          detail: "ライブコーディング環境・プレビュー付き開発" },
+        { name: "canvas-design", category: "visualization", relevance: 2, source: "skills repo",
+          desc: "Canvas APIを使ったグラフィックデザイン",
+          usecase: "カスタムチャート・インフォグラフィック",
+          detail: "HTML5 Canvas, アニメーション, データビジュアライゼーション" },
+        { name: "web-artifacts-builder", category: "visualization", relevance: 3, source: "skills repo",
+          desc: "Webアーティファクトの構築。単一HTMLファイルの生成",
+          usecase: "GitHub Pages・デモサイト・ポートフォリオ",
+          detail: "CSS/JS埋め込みの自己完結型HTMLを生成" },
+        { name: "algorithmic-art", category: "visualization", relevance: 1, source: "skills repo",
+          desc: "アルゴリズミックアート・ジェネラティブデザイン",
+          usecase: "クリエイティブコーディング",
+          detail: "数学的パターン、フラクタル、パーティクルシステム" },
+
+        // ドキュメント生成
+        { name: "pdf", category: "document", relevance: 2, source: "installed",
+          desc: "PDF文書の生成",
+          usecase: "論文・レポートのPDF出力",
+          detail: "構造化ドキュメントからPDFを生成" },
+        { name: "pptx", category: "document", relevance: 2, source: "skills repo",
+          desc: "PowerPointプレゼンテーション生成",
+          usecase: "学会発表・ミーティング資料",
+          detail: "スライドデッキの自動生成" },
+        { name: "docx", category: "document", relevance: 2, source: "skills repo",
+          desc: "Word文書の生成",
+          usecase: "レポート・提案書作成",
+          detail: "フォーマット付きWord文書を生成" },
+        { name: "xlsx", category: "document", relevance: 2, source: "skills repo",
+          desc: "Excelスプレッドシート生成",
+          usecase: "データ集計・分析レポート",
+          detail: "構造化データからExcelファイルを生成" },
+
+        // AI/LLMツール開発
+        { name: "claude-api", category: "ai-llm", relevance: 3, source: "installed",
+          desc: "Claude API / Anthropic SDKを使ったアプリ構築",
+          usecase: "AIエージェント・LLMアプリケーション開発",
+          detail: "Anthropic SDK, Agent SDK, ツール使用, ストリーミング" },
+        { name: "skill-creator", category: "ai-llm", relevance: 2, source: "skills repo",
+          desc: "Claude Codeスキルの作成支援",
+          usecase: "カスタムスキル開発",
+          detail: "スキルテンプレート生成・メタデータ設定" },
+        { name: "skill-development", category: "ai-llm", relevance: 2, source: "skills repo",
+          desc: "スキル開発のベストプラクティス",
+          usecase: "スキルの品質向上・テスト",
+          detail: "スキルの設計パターン・デバッグ手法" },
+        { name: "mcp-builder", category: "ai-llm", relevance: 3, source: "skills repo",
+          desc: "MCPサーバーの構築支援",
+          usecase: "Zotero MCP・Obsidian MCP等の開発",
+          detail: "Model Context Protocolサーバーのスキャフォールディング・実装" },
+        { name: "mcp-integration", category: "ai-llm", relevance: 3, source: "skills repo",
+          desc: "MCP統合・接続設定",
+          usecase: "MCPサーバーとClaude Codeの連携",
+          detail: "MCPサーバーの設定・トラブルシューティング" },
+
+        // プラグイン開発
+        { name: "plugin-structure", category: "plugin", relevance: 2, source: "skills repo",
+          desc: "Claude Codeプラグインの構造設計",
+          usecase: "プラグイン開発の初期設計",
+          detail: "ディレクトリ構成・エントリポイント・マニフェスト" },
+        { name: "hook-development", category: "plugin", relevance: 2, source: "skills repo",
+          desc: "フック開発。イベント駆動の自動化",
+          usecase: "コミット前チェック・ファイル変更時の処理",
+          detail: "Claude Codeフックの作成・設定" },
+        { name: "command-development", category: "plugin", relevance: 2, source: "skills repo",
+          desc: "カスタムコマンドの開発",
+          usecase: "スラッシュコマンドの追加",
+          detail: "独自コマンドの実装・登録" },
+        { name: "agent-development", category: "plugin", relevance: 2, source: "skills repo",
+          desc: "カスタムエージェントの開発",
+          usecase: "特化型AIエージェントの構築",
+          detail: "エージェントの設計・プロンプト最適化" },
+        { name: "plugin-settings", category: "plugin", relevance: 1, source: "skills repo",
+          desc: "プラグイン設定管理",
+          usecase: "プラグインの設定UI・パラメータ管理",
+          detail: "設定スキーマ・デフォルト値・バリデーション" },
+
+        // コード品質・レビュー
+        { name: "simplify", category: "code-quality", relevance: 2, source: "installed",
+          desc: "コードの簡素化・リファクタリング支援",
+          usecase: "変更コードの品質チェック・効率改善",
+          detail: "再利用性・品質・効率の観点でコードをレビューし自動修正" },
+        { name: "code-review", category: "code-quality", relevance: 2, source: "installed (command)",
+          desc: "コードレビューの実行",
+          usecase: "PR・コミット前のコード品質チェック",
+          detail: "バグ検出・セキュリティチェック・ベストプラクティス" },
+
+        // ワークフロー自動化
+        { name: "loop", category: "workflow", relevance: 1, source: "installed",
+          desc: "定期実行タスク。指定間隔でコマンドを繰り返し実行",
+          usecase: "デプロイ監視・定期チェック",
+          detail: "/loop 5m /foo のように使用。デフォルト10分間隔" },
+        { name: "hookify", category: "workflow", relevance: 1, source: "skills repo",
+          desc: "ルールベースのフック自動生成",
+          usecase: "ワークフロー自動化ルールの作成",
+          detail: "条件とアクションを定義してフックを自動生成" },
+
+        // プロジェクト管理
+        { name: "claude-md-improver", category: "project-mgmt", relevance: 2, source: "installed",
+          desc: "CLAUDE.mdファイルの監査・改善",
+          usecase: "プロジェクト設定の最適化",
+          detail: "CLAUDE.mdの品質評価・テンプレートベースの改善提案" },
+        { name: "revise-claude-md", category: "project-mgmt", relevance: 2, source: "installed",
+          desc: "セッションの学びをCLAUDE.mdに反映",
+          usecase: "作業後のプロジェクト設定更新",
+          detail: "会話から得た知見をCLAUDE.mdに自動追記" },
+        { name: "claude-automation-recommender", category: "project-mgmt", relevance: 2, source: "skills repo",
+          desc: "Claude Code自動化の推薦",
+          usecase: "ワークフロー改善の提案",
+          detail: "プロジェクトに適した自動化パターンを推薦" },
+
+        // デザイン・ブランディング
+        { name: "brand-guidelines", category: "design", relevance: 1, source: "skills repo",
+          desc: "ブランドガイドライン作成",
+          usecase: "プロジェクトのビジュアルアイデンティティ",
+          detail: "カラーパレット・タイポグラフィ・ロゴ使用規定" },
+        { name: "theme-factory", category: "design", relevance: 1, source: "skills repo",
+          desc: "テーマ・カラースキーム生成",
+          usecase: "UIテーマのカスタマイズ",
+          detail: "ダーク/ライトテーマ・アクセントカラー" },
+        { name: "internal-comms", category: "design", relevance: 1, source: "skills repo",
+          desc: "社内コミュニケーション資料作成",
+          usecase: "チーム向けドキュメント・お知らせ",
+          detail: "ニュースレター・アナウンス文テンプレート" },
+        { name: "slack-gif-creator", category: "design", relevance: 1, source: "skills repo",
+          desc: "Slack用GIF・アニメーション作成",
+          usecase: "チームコミュニケーション",
+          detail: "カスタムGIF・リアクション画像の生成" },
+
+        // テスト
+        { name: "webapp-testing", category: "other", relevance: 1, source: "skills repo",
+          desc: "Webアプリケーションのテスト支援",
+          usecase: "E2Eテスト・UIテスト",
+          detail: "テストシナリオ生成・自動テスト実装" },
+
+        // その他ユーティリティ
+        { name: "keybindings-help", category: "other", relevance: 1, source: "installed",
+          desc: "キーバインド設定のヘルプ・カスタマイズ",
+          usecase: "Claude Codeのショートカット設定",
+          detail: "キーボードショートカットの変更・追加" },
+        { name: "example-skill", category: "other", relevance: 1, source: "skills repo",
+          desc: "スキル開発のサンプルテンプレート",
+          usecase: "新規スキル作成の参考",
+          detail: "スキルの基本構造を示すサンプル" },
+    ];
+
+    const categoryNames = {
+        "academic": "学術・論文執筆",
+        "visualization": "データ可視化",
+        "document": "ドキュメント生成",
+        "ai-llm": "AI/LLMツール",
+        "plugin": "プラグイン開発",
+        "code-quality": "コード品質",
+        "workflow": "ワークフロー",
+        "project-mgmt": "プロジェクト管理",
+        "design": "デザイン",
+        "other": "その他"
+    };
+
+    const relevanceLabels = { 3: "★★★ 高", 2: "★★☆ 中", 1: "★☆☆ 低" };
+
+    function renderSkills(filter, sortBy) {
+        const grid = document.getElementById("skills-grid");
+        let filtered = filter === "all" ? [...skills] : skills.filter(s => s.category === filter);
+
+        if (sortBy === "relevance") {
+            filtered.sort((a, b) => b.relevance - a.relevance || a.name.localeCompare(b.name));
+        } else if (sortBy === "name") {
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortBy === "category") {
+            filtered.sort((a, b) => a.category.localeCompare(b.category) || b.relevance - a.relevance);
+        }
+
+        grid.innerHTML = filtered.map(s => `
+            <div class="skill-card" onclick="this.classList.toggle('expanded')">
+                <div class="card-header">
+                    <span class="skill-name">${s.name}</span>
+                    <span class="relevance relevance-${s.relevance}">${relevanceLabels[s.relevance]}</span>
+                </div>
+                <span class="category-badge">${categoryNames[s.category]}</span>
+                <div class="description">${s.desc}</div>
+                <div class="card-detail">
+                    <div class="usecase"><strong>Use Case:</strong> ${s.usecase}</div>
+                    <div class="usecase"><strong>Detail:</strong> ${s.detail}</div>
+                    <div class="source">Source: ${s.source}</div>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    // Filter buttons
+    let currentFilter = "all";
+    let currentSort = "relevance";
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilter = btn.dataset.filter;
+            renderSkills(currentFilter, currentSort);
+        });
+    });
+
+    // Sort select
+    document.getElementById("sort-select").addEventListener("change", (e) => {
+        currentSort = e.target.value;
+        renderSkills(currentFilter, currentSort);
+    });
+
+    // Initial render
+    renderSkills("all", "relevance");
+    </script>
+</body>
+</html>
