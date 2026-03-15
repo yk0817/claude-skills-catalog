@@ -369,7 +369,7 @@
             <span class="profile-tag">Crypto Exchange Engineer</span>
             <span class="profile-tag">NLP &times; Knowledge Graph Researcher</span>
             <span class="profile-tag">Product Manager</span>
-            <span class="profile-tag">41 Skills Available</span>
+            <span class="profile-tag">30 Skills Available</span>
         </div>
     </header>
 
@@ -377,7 +377,7 @@
         <!-- Summary -->
         <div class="summary">
             <div class="stat-card">
-                <div class="value">41</div>
+                <div class="value">30</div>
                 <div class="label">Total Skills</div>
             </div>
             <div class="stat-card">
@@ -389,15 +389,11 @@
                 <div class="label">Skills Repo</div>
             </div>
             <div class="stat-card">
-                <div class="value">11</div>
-                <div class="label">Recommended</div>
-            </div>
-            <div class="stat-card">
-                <div class="value">12</div>
+                <div class="value">10</div>
                 <div class="label">Categories</div>
             </div>
             <div class="stat-card">
-                <div class="value">7</div>
+                <div class="value">5</div>
                 <div class="label">Top Recommendations</div>
             </div>
         </div>
@@ -444,33 +440,6 @@
                 <li class="rec-item">
                     <div class="rec-rank">1</div>
                     <div class="rec-content">
-                        <h3>金融・暗号資産</h3>
-                        <p>暗号資産交換所のシステム開発に直結。市場データ可視化・リスク分析・コンプライアンス対応</p>
-                        <div class="rec-skills">
-                            <span class="rec-skill-tag">trading-system-review</span>
-                            <span class="rec-skill-tag">market-data-viz</span>
-                            <span class="rec-skill-tag">risk-analysis</span>
-                            <span class="rec-skill-tag">compliance-checker</span>
-                            <span class="rec-skill-tag">crypto-kg-builder</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="rec-item">
-                    <div class="rec-rank">2</div>
-                    <div class="rec-content">
-                        <h3>プロダクトマネジメント</h3>
-                        <p>PRD作成・ユーザーストーリー設計・KPI管理。暗号資産交換所のプロダクト開発サイクルを加速</p>
-                        <div class="rec-skills">
-                            <span class="rec-skill-tag">prd-generator</span>
-                            <span class="rec-skill-tag">user-story-mapper</span>
-                            <span class="rec-skill-tag">metrics-dashboard</span>
-                            <span class="rec-skill-tag">sprint-planner</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="rec-item">
-                    <div class="rec-rank">3</div>
-                    <div class="rec-content">
                         <h3>学術論文執筆</h3>
                         <p>知識グラフ研究・学術論文に直結。科学的文章の構成・引用管理・報告ガイドラインに対応</p>
                         <div class="rec-skills">
@@ -481,7 +450,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">4</div>
+                    <div class="rec-rank">2</div>
                     <div class="rec-content">
                         <h3>データ可視化 & GitHub Pages</h3>
                         <p>shibuya-restaurant-analysisで実績あり。インタラクティブなデータ可視化サイトを高速構築</p>
@@ -493,7 +462,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">5</div>
+                    <div class="rec-rank">3</div>
                     <div class="rec-content">
                         <h3>AI/LLM・MCPツール開発</h3>
                         <p>Zotero/Obsidian MCP開発中。Claude APIとMCPサーバー構築を効率化</p>
@@ -505,7 +474,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">6</div>
+                    <div class="rec-rank">4</div>
                     <div class="rec-content">
                         <h3>ドキュメント生成</h3>
                         <p>論文PDF・プレゼン資料・スプレッドシートの自動生成</p>
@@ -518,7 +487,7 @@
                     </div>
                 </li>
                 <li class="rec-item">
-                    <div class="rec-rank">7</div>
+                    <div class="rec-rank">5</div>
                     <div class="rec-content">
                         <h3>コード品質</h3>
                         <p>取引システム開発の品質担保。コードの簡素化・レビュー自動化</p>
@@ -536,9 +505,7 @@
             <h2>Skills Catalog</h2>
 
             <div class="filters">
-                <button class="filter-btn active" data-filter="all">All (41)</button>
-                <button class="filter-btn" data-filter="finance">金融・暗号資産</button>
-                <button class="filter-btn" data-filter="product-mgmt">プロダクトマネジメント</button>
+                <button class="filter-btn active" data-filter="all">All (30)</button>
                 <button class="filter-btn" data-filter="academic">学術・論文執筆</button>
                 <button class="filter-btn" data-filter="visualization">データ可視化</button>
                 <button class="filter-btn" data-filter="document">ドキュメント生成</button>
@@ -577,54 +544,6 @@
     const D = "https://docs.anthropic.com/en/docs/claude-code/skills";
 
     const skills = [
-        // 金融・暗号資産（推薦スキル）
-        { name: "trading-system-review", category: "finance", relevance: 3, popularity: 4, source: "recommended", url: null,
-          desc: "トレーディングシステムのコード品質・安全性レビュー",
-          usecase: "取引エンジンの品質担保・障害防止",
-          detail: "レイテンシ最適化、注文処理の整合性チェック、異常検知ロジックのレビュー" },
-        { name: "market-data-viz", category: "finance", relevance: 3, popularity: 4, source: "recommended", url: null,
-          desc: "市場データ可視化。チャート・ヒートマップ・板情報の表示",
-          usecase: "暗号資産市場の分析ダッシュボード構築",
-          detail: "OHLCV、オーダーブック、リアルタイムティッカーの可視化" },
-        { name: "risk-analysis", category: "finance", relevance: 3, popularity: 3, source: "recommended", url: null,
-          desc: "リスク分析・ポジション管理ツール",
-          usecase: "取引リスクの定量化・ポートフォリオ管理",
-          detail: "VaR計算、ストレステスト、エクスポージャー分析" },
-        { name: "smart-contract-audit", category: "finance", relevance: 2, popularity: 4, source: "recommended", url: null,
-          desc: "Solidityスマートコントラクト監査",
-          usecase: "solidity_smart_contractリポジトリの品質チェック",
-          detail: "リエントランシー、オーバーフロー、アクセス制御の脆弱性検出" },
-        { name: "compliance-checker", category: "finance", relevance: 3, popularity: 3, source: "recommended", url: null,
-          desc: "金融規制コンプライアンスチェック",
-          usecase: "JFSA（金融庁）規制・AML/KYC要件への準拠確認",
-          detail: "暗号資産交換業者向け規制チェックリスト・監査対応" },
-        { name: "crypto-kg-builder", category: "finance", relevance: 3, popularity: 2, source: "recommended", url: null,
-          desc: "暗号資産ナレッジグラフ構築支援",
-          usecase: "crypto-knowledge-graph・finance-knowledge-graph開発",
-          detail: "トークン関係性・取引所間フロー・DeFiプロトコルのグラフモデリング" },
-
-        // プロダクトマネジメント（推薦スキル）
-        { name: "prd-generator", category: "product-mgmt", relevance: 3, popularity: 5, source: "recommended", url: null,
-          desc: "PRD（プロダクト要件定義書）の作成支援",
-          usecase: "新機能・サービスのPRD作成",
-          detail: "課題定義、ユーザーペルソナ、機能要件、成功指標のテンプレート生成" },
-        { name: "user-story-mapper", category: "product-mgmt", relevance: 3, popularity: 4, source: "recommended", url: null,
-          desc: "ユーザーストーリー・ジャーニーマップ作成",
-          usecase: "取引所ユーザーの体験設計・機能優先順位付け",
-          detail: "ストーリーマッピング、受入基準、エピック分解" },
-        { name: "sprint-planner", category: "product-mgmt", relevance: 2, popularity: 4, source: "recommended", url: null,
-          desc: "スプリント計画・バックログ管理",
-          usecase: "開発チームのスプリント計画",
-          detail: "ベロシティ推定、タスク分解、依存関係の整理" },
-        { name: "metrics-dashboard", category: "product-mgmt", relevance: 3, popularity: 5, source: "recommended", url: null,
-          desc: "KPI・プロダクトメトリクス設計",
-          usecase: "取引所のKPIダッシュボード設計",
-          detail: "DAU/MAU、取引量、コンバージョン率などのメトリクス定義・可視化設計" },
-        { name: "competitor-analysis", category: "product-mgmt", relevance: 2, popularity: 3, source: "recommended", url: null,
-          desc: "競合分析テンプレート",
-          usecase: "暗号資産交換所の競合比較・差別化戦略",
-          detail: "SWOT分析、機能比較マトリクス、市場ポジショニング" },
-
         // 学術・論文執筆
         { name: "scientific-writing", category: "academic", relevance: 3, popularity: 5, source: "bundled", url: D,
           desc: "科学論文の執筆支援。IMRAD構成・引用・図表のベストプラクティス",
@@ -809,8 +728,6 @@
     ];
 
     const categoryNames = {
-        "finance": "金融・暗号資産",
-        "product-mgmt": "プロダクトマネジメント",
         "academic": "学術・論文執筆",
         "visualization": "データ可視化",
         "document": "ドキュメント生成",
